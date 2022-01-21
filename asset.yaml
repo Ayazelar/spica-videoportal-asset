@@ -1,0 +1,604 @@
+# BUCKET - Users
+apiVersion: bucket/v1
+kind: Schema
+metadata:
+  name: spica-videoportal-asset-users-bucket
+spec:
+  title: Users
+  description: Application users
+  icon: accessibility
+  primary: username
+  readOnly: false
+  history: false
+  properties:
+    identity_id:
+      type: string
+      description: Description of the identity_id input
+      options:
+        position: left
+      title: identity_id
+    username:
+      type: string
+      description: Description of the username input
+      options:
+        position: left
+      title: username
+    preferred_language:
+      type: string
+      description: Description of the preferred_language input
+      options:
+        position: left
+      title: preferred_language
+    autoplay_next:
+      type: boolean
+      description: Description of the autoplay_next input
+      options:
+        position: left
+      default: true
+      title: autoplay_next
+    autoplay_previews:
+      type: boolean
+      description: Description of the autoplay_previews input
+      options:
+        position: left
+      default: true
+      title: autoplay_previews
+    maturity_settings:
+      type: relation
+      description: Description of the maturity_settings input
+      options:
+        position: right
+      relationType: onetomany
+      dependent: false
+      primary: name
+      title: maturity_settings
+      bucket:
+        resourceFieldRef:
+          schemaName: spica-videoportal-asset-maturity-rating-bucket
+    watch_list:
+      type: relation
+      description: Description of the watch_list input
+      options:
+        position: right
+      relationType: onetomany
+      dependent: false
+      primary: title
+      title: watch_list
+      bucket:
+        resourceFieldRef:
+          schemaName: spica-videoportal-asset-series-bucket
+    likes:
+      type: relation
+      description: Description of the likes input
+      options:
+        position: right
+      relationType: onetomany
+      dependent: false
+      primary: title
+      title: likes
+      bucket:
+        resourceFieldRef:
+          schemaName: spica-videoportal-asset-series-bucket
+    dislikes:
+      type: relation
+      description: Description of the dislikes input
+      options:
+        position: right
+      relationType: onetomany
+      dependent: false
+      primary: title
+      title: dislikes
+      bucket:
+        resourceFieldRef:
+          schemaName: spica-videoportal-asset-series-bucket
+    name:
+      type: string
+      title: name
+      description: Description of the name input
+      options:
+        position: bottom
+    surname:
+      type: string
+      title: surname
+      description: Description of the surname input
+      options:
+        position: bottom
+    image:
+      type: storage
+      title: image
+      description: Description of the image input
+      options:
+        position: bottom
+  acl:
+    write: true==true
+    read: true==true
+  order: 0
+---
+# BUCKET - Brands
+apiVersion: bucket/v1
+kind: Schema
+metadata:
+  name: spica-videoportal-asset-brands-bucket
+spec:
+  title: Brands
+  description: Describe your new bucket
+  icon: library_books
+  primary: name
+  readOnly: false
+  history: false
+  properties:
+    name:
+      type: string
+      description: Description of the name input
+      options:
+        position: left
+      title: name
+    description:
+      type: textarea
+      description: Description of the description input
+      options:
+        position: right
+      title: description
+    series:
+      type: relation
+      description: Description of the series input
+      options:
+        position: left
+      relationType: onetomany
+      dependent: true
+      primary: title
+      title: series
+      bucket:
+        resourceFieldRef:
+          schemaName: spica-videoportal-asset-series-bucket
+    maturity:
+      type: relation
+      description: Description of the maturity input
+      options:
+        position: bottom
+      relationType: onetoone
+      dependent: false
+      title: maturity
+      bucket:
+        resourceFieldRef:
+          schemaName: spica-videoportal-asset-maturity-rating-bucket
+  acl:
+    write: true==true
+    read: true==true
+  order: 1
+---
+# BUCKET - Series
+apiVersion: bucket/v1
+kind: Schema
+metadata:
+  name: spica-videoportal-asset-series-bucket
+spec:
+  title: Series
+  description: Series and films
+  icon: subscriptions
+  primary: title
+  readOnly: false
+  history: false
+  properties:
+    title:
+      type: string
+      description: Title of the row
+      options:
+        position: left
+      title: title
+    description:
+      type: textarea
+      description: Description of the row
+      options:
+        position: left
+      title: description
+    thumbnail:
+      type: storage
+      description: Description of the thumbnail input
+      options:
+        position: right
+      title: thumbnail
+    maturity:
+      type: relation
+      title: maturity
+      description: Description of the maturity input
+      options:
+        position: left
+      relationType: onetomany
+      dependent: false
+      primary: name
+      bucket:
+        resourceFieldRef:
+          schemaName: spica-videoportal-asset-maturity-rating-bucket
+    genres:
+      type: relation
+      description: Description of the genres input
+      options:
+        position: right
+      relationType: onetomany
+      dependent: false
+      primary: genre
+      title: genres
+      bucket:
+        resourceFieldRef:
+          schemaName: spica-videoportal-asset-genres-bucket
+    director:
+      type: relation
+      description: Description of the director input
+      options:
+        position: right
+      relationType: onetomany
+      dependent: false
+      primary: name
+      title: director
+      bucket:
+        resourceFieldRef:
+          schemaName: spica-videoportal-asset-people-bucket
+    cast:
+      type: relation
+      description: Description of the cast input
+      options:
+        position: right
+      relationType: onetomany
+      dependent: false
+      primary: name
+      title: cast
+      bucket:
+        resourceFieldRef:
+          schemaName: spica-videoportal-asset-people-bucket
+    writer:
+      type: relation
+      description: Description of the writer input
+      options:
+        position: right
+      relationType: onetomany
+      dependent: false
+      primary: name
+      title: writer
+      bucket:
+        resourceFieldRef:
+          schemaName: spica-videoportal-asset-people-bucket
+    tags:
+      type: relation
+      description: Description of the tags input
+      options:
+        position: right
+      relationType: onetomany
+      dependent: false
+      primary: tag
+      title: tags
+      bucket:
+        resourceFieldRef:
+          schemaName: spica-videoportal-asset-tags-bucket
+    release_date:
+      type: date
+      description: Description of the release_date input
+      options:
+        position: left
+      title: release_date
+    is_available:
+      type: boolean
+      description: Description of the is_available input
+      options:
+        position: left
+      default: false
+      title: is_available
+    total_season:
+      type: number
+      title: total_season
+      description: Description of the total_season input
+      options:
+        position: left
+  acl:
+    write: true==true
+    read: true==true
+  order: 2
+---
+# BUCKET - Videos
+apiVersion: bucket/v1
+kind: Schema
+metadata:
+  name: spica-videoportal-asset-videos-bucket
+spec:
+  title: Videos
+  description: "One part in series or film "
+  icon: movie
+  primary: title
+  readOnly: false
+  history: false
+  properties:
+    title:
+      type: string
+      description: Title of the row
+      options:
+        position: left
+      title: title
+    description:
+      type: textarea
+      description: Description of the row
+      options:
+        position: left
+      title: description
+    serie:
+      type: relation
+      description: Description of the serie input
+      options:
+        position: left
+      relationType: onetoone
+      dependent: false
+      title: serie
+      primary: title
+      bucket:
+        resourceFieldRef:
+          schemaName: spica-videoportal-asset-series-bucket
+    video:
+      type: storage
+      description: Description of the video input
+      options:
+        position: right
+      title: video
+    subtitles:
+      type: storage
+      description: Description of the subtitles input
+      options:
+        position: right
+        translate: true
+      title: subtitles
+    duration:
+      type: number
+      description: Description of the duration input
+      options:
+        position: left
+      minimum: 0
+      title: duration
+    season:
+      type: number
+      title: season
+      description: Description of the season input
+      options:
+        position: bottom
+    episode:
+      type: number
+      title: episode
+      description: Description of the episode input
+      options:
+        position: bottom
+    poster:
+      type: storage
+      title: poster
+      description: Description of the poster input
+      options:
+        position: bottom
+  acl:
+    write: true==true
+    read: true==true
+  order: 3
+---
+# BUCKET - Genres
+apiVersion: bucket/v1
+kind: Schema
+metadata:
+  name: spica-videoportal-asset-genres-bucket
+spec:
+  title: Genres
+  description: All system genres
+  icon: queue
+  primary: genre
+  readOnly: false
+  history: false
+  properties:
+    genre:
+      type: string
+      description: Description of the genre input
+      options:
+        position: bottom
+      title: genre
+  acl:
+    write: true==true
+    read: true==true
+  order: 4
+---
+# BUCKET - People
+apiVersion: bucket/v1
+kind: Schema
+metadata:
+  name: spica-videoportal-asset-people-bucket
+spec:
+  title: People
+  description: Everyone with responsibilities
+  icon: account_box
+  primary: name
+  readOnly: false
+  history: false
+  properties:
+    name:
+      type: string
+      description: Description of the name input
+      options:
+        position: bottom
+      title: name
+  acl:
+    write: true==true
+    read: true==true
+  order: 5
+---
+# BUCKET - Tags
+apiVersion: bucket/v1
+kind: Schema
+metadata:
+  name: spica-videoportal-asset-tags-bucket
+spec:
+  title: Tags
+  description: Film tags
+  icon: 4k
+  primary: tag
+  readOnly: false
+  history: false
+  properties:
+    tag:
+      type: string
+      description: Description of the tag input
+      options:
+        position: bottom
+      title: tag
+  acl:
+    write: true==true
+    read: true==true
+  order: 6
+---
+# BUCKET - watched_video
+apiVersion: bucket/v1
+kind: Schema
+metadata:
+  name: spica-videoportal-asset-watched_video-bucket
+spec:
+  title: watched_video
+  description: Describe your new bucket
+  icon: view_stream
+  primary: title
+  readOnly: false
+  history: false
+  properties:
+    user:
+      type: relation
+      title: user
+      description: Description of the user input
+      options:
+        position: bottom
+      relationType: onetoone
+      dependent: false
+      bucket:
+        resourceFieldRef:
+          schemaName: spica-videoportal-asset-users-bucket
+    video:
+      type: relation
+      title: video
+      description: Description of the video input
+      options:
+        position: bottom
+      relationType: onetoone
+      dependent: false
+      bucket:
+        resourceFieldRef:
+          schemaName: spica-videoportal-asset-videos-bucket
+    title:
+      type: string
+      title: title
+      description: Description of the title input
+      options:
+        position: bottom
+  acl:
+    write: true==true
+    read: true==true
+  order: 7
+---
+# BUCKET - Maturity Rating
+apiVersion: bucket/v1
+kind: Schema
+metadata:
+  name: spica-videoportal-asset-maturity-rating-bucket
+spec:
+  title: Maturity Rating
+  description: Maturity ratings
+  icon: videocam_off
+  primary: name
+  readOnly: false
+  history: false
+  properties:
+    name:
+      type: string
+      description: Description of the name input
+      options:
+        position: left
+      title: name
+  acl:
+    write: true==true
+    read: true==true
+  order: 8
+---
+# BUCKET - Activity
+apiVersion: bucket/v1
+kind: Schema
+metadata:
+  name: spica-videoportal-asset-activity-bucket
+spec:
+  title: Activity
+  description: Describe your new bucket
+  icon: play_circle_filled
+  primary: activity
+  readOnly: false
+  history: false
+  properties:
+    user:
+      type: relation
+      description: Description of the user input
+      options:
+        position: left
+      relationType: onetoone
+      dependent: false
+      title: user
+      bucket:
+        resourceFieldRef:
+          schemaName: spica-videoportal-asset-users-bucket
+    video:
+      type: relation
+      description: Description of the video input
+      options:
+        position: left
+      relationType: onetoone
+      dependent: false
+      title: video
+      bucket:
+        resourceFieldRef:
+          schemaName: spica-videoportal-asset-videos-bucket
+    activity:
+      type: textarea
+      description: Description of the activity input
+      options:
+        position: right
+      title: activity
+  acl:
+    write: true==true
+    read: true==true
+  order: 9
+---
+# BUCKET - Site configuration
+apiVersion: bucket/v1
+kind: Schema
+metadata:
+  name: spica-videoportal-asset-site-configuration-bucket
+spec:
+  title: Site configuration
+  description: Describe your new bucket
+  icon: view_stream
+  primary: title
+  readOnly: false
+  history: false
+  properties:
+    title:
+      type: string
+      title: title
+      description: Title of the row
+      options:
+        position: left
+    logo:
+      type: storage
+      title: logo
+      description: Description of the logo input
+      options:
+        position: bottom
+    showcase:
+      type: relation
+      title: showcase
+      description: Description of the showcase input
+      options:
+        position: bottom
+      relationType: onetoone
+      dependent: false
+      bucket:
+        resourceFieldRef:
+          schemaName: spica-videoportal-asset-series-bucket
+  acl:
+    write: true==true
+    read: true==true
+  order: 10
